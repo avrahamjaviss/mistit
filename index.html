@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MissedIT — Coming Soon</title>
+  <meta name="description" content="MissedIT — disposable vapes and all the popular basics. Coming soon. 21+ only.">
+  <style>
+    :root {
+      --bg: #0b0b10;
+      --surface: #14141c;
+      --border: #24243a;
+      --text: #ececf1;
+      --muted: #9a9ab0;
+      --accent: #a855f7;
+      --accent-2: #22d3ee;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    body.locked { overflow: hidden; }
+
+    .container { width: 100%; max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+    /* Hero */
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(168, 85, 247, 0.25), transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(34, 211, 238, 0.18), transparent 50%);
+    }
+    .logo {
+      font-size: clamp(3rem, 12vw, 7rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .logo .it {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .pronounce {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-style: italic;
+    }
+    .tagline {
+      margin-top: 24px;
+      font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+      color: var(--text);
+      opacity: 0.9;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 36px;
+      padding: 14px 32px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: #0b0b10;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(168, 85, 247, 0.35); }
+
+    /* Sections */
+    section { padding: 80px 0; }
+    h2 {
+      font-size: clamp(1.75rem, 5vw, 2.5rem);
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+    .lead { color: var(--muted); font-size: 1.1rem; max-width: 640px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 36px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      transition: border-color 0.2s ease;
+    }
+    .card:hover { border-color: var(--accent); }
+    .card h3 { font-size: 1.15rem; margin-bottom: 8px; }
+    .card p { color: var(--muted); font-size: 0.95rem; }
+
+    .soon {
+      text-align: center;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .soon .lead { margin: 0 auto; }
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    /* Footer */
+    footer {
+      padding: 40px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    footer .brand { color: var(--text); font-weight: 700; }
+    .age-note {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.8rem;
+    }
+    .warning { margin-top: 12px; font-size: 0.75rem; opacity: 0.7; }
+
+    /* Age gate */
+    .age-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(5, 5, 8, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .age-gate[hidden] { display: none; }
+    .age-box {
+      width: 100%;
+      max-width: 400px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .age-box h2 { font-size: 1.6rem; margin-bottom: 8px; }
+    .age-box p { color: var(--muted); margin-bottom: 24px; }
+    .age-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .age-actions button {
+      flex: 1 1 140px;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid var(--border);
+    }
+    .age-yes {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: #0b0b10;
+      border: none !important;
+    }
+    .age-no { background: transparent; color: var(--text); }
+    .age-no:hover { border-color: var(--muted); }
+    .denied { display: none; color: #f87171 !important; margin: 16px 0 0 !important; }
+  </style>
+</head>
+<body class="locked">
+
+  <!-- 21+ age gate -->
+  <div class="age-gate" id="ageGate" role="dialog" aria-modal="true" aria-labelledby="ageTitle">
+    <div class="age-box">
+      <h2 id="ageTitle">Are you 21 or older?</h2>
+      <p>You must be 21+ to enter this site.</p>
+      <div class="age-actions">
+        <button class="age-yes" id="ageYes">Yes, I'm 21+</button>
+        <button class="age-no" id="ageNo">No</button>
+      </div>
+      <p class="denied" id="ageDenied">Sorry, you must be 21 or older to visit MissedIT.</p>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="container">
+      <h1 class="logo">Missed<span class="it">IT</span></h1>
+      <p class="pronounce">pronounced "Missed It"</p>
+      <p class="tagline">Don't miss out. Your new go-to vape shop is on the way.</p>
+      <a href="#coming-soon" class="btn">Coming Soon</a>
+    </div>
+  </header>
+
+  <main>
+    <section id="about">
+      <div class="container">
+        <h2>What we're doing</h2>
+        <p class="lead">
+          MissedIT is a new vape shop built around simple, reliable picks. We'll be carrying
+          disposable vapes and all the popular basic types — the stuff people actually use, without the hassle.
+        </p>
+        <div class="grid">
+          <div class="card">
+            <h3>Disposables</h3>
+            <p>Grab-and-go disposable vapes from popular brands in a wide range of flavors.</p>
+          </div>
+          <div class="card">
+            <h3>Popular Basics</h3>
+            <p>Pod systems, starter kits, and the everyday essentials most people look for.</p>
+          </div>
+          <div class="card">
+            <h3>Simple Shopping</h3>
+            <p>No clutter, no confusion — just the products you want at fair prices.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="coming-soon" class="soon">
+      <div class="container">
+        <span class="badge">Coming Soon</span>
+        <h2>We're almost here</h2>
+        <p class="lead">
+          MissedIT is getting ready to open. Check back soon for our launch date, location, and product lineup.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; <span id="year">2026</span> <span class="brand">MissedIT</span>. All rights reserved.</p>
+      <span class="age-note">21+ only</span>
+      <p class="warning">WARNING: This product contains nicotine. Nicotine is an addictive chemical.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var gate = document.getElementById('ageGate');
+      var KEY = 'missedit_age_ok';
+
+      function unlock() {
+        gate.hidden = true;
+        document.body.classList.remove('locked');
+      }
+
+      var verified = false;
+      try { verified = sessionStorage.getItem(KEY) === '1'; } catch (e) {}
+      if (verified) unlock();
+
+      document.getElementById('ageYes').addEventListener('click', function () {
+        try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+        unlock();
+      });
+
+      document.getElementById('ageNo').addEventListener('click', function () {
+        document.getElementById('ageDenied').style.display = 'block';
+        document.querySelector('.age-actions').style.display = 'none';
+      });
+
+      document.getElementById('year').textContent = new Date().getFullYear();
+    })();
+  </script>
+</body>
+</html>
